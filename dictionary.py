@@ -1,3 +1,5 @@
+import controller as c
+
 class Dictionary:
     def __init__(self, dict=[], language = ""):
         self._dict = dict
@@ -5,9 +7,15 @@ class Dictionary:
 
     def loadDictionary(self,path):
         file_path = path
-        with open(file_path, 'r') as file:
+        with open(file_path, 'r', encoding="utf-8") as file:
             for line in file:
-                value = line.strip()
+                line_changed = ""
+                for char in line:
+                    if char == '/':
+                        break
+                    else:
+                        line_changed += char
+                value = line_changed.strip()
                 self._dict.append(value.lower())
 
     def printAll(self):

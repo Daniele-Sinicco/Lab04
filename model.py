@@ -41,6 +41,8 @@ class MultiDictionary:
                     found = True
             if (found):
                 richW.corretta = True
+            else:
+                richW.corretta = False
 
             parole.append(richW)
 
@@ -68,6 +70,8 @@ class MultiDictionary:
                         found = True
             if (found):
                 richW.corretta = True
+            else:
+                richW.corretta = False
 
             parole.append(richW)
 
@@ -92,6 +96,8 @@ class MultiDictionary:
                 found = dichotomicSearch(word, currentDic)
             if (found):
                 richW.corretta = True
+            else:
+                richW.corretta = False
 
             parole.append(richW)
 

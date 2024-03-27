@@ -8,10 +8,32 @@ class SpellChecker:
         self._multiDic = md.MultiDictionary()
         self._view = view
 
+
+    def handleSpellCheck(self,e):
+        """
+        print(str(self._view._language.value))
+        print(str(self._view._search.value))
+        print(str(self._view._input.value))
+        """
+        self._view._lvOut.controls.clear()
+        self._view.update()
+        if self._view._language.value == None or self._view._search.value == None or self._view._input.value == "":
+            self._view._lvOut.controls.append(ft.Text("All fields should be filled."))
+            self._view.update()
+        else:
+            errate, tempo = self.handleSentence(self._view._input.value, self._view._language.value, self._view._search.value)
+            errate_split = errate.split(" - ")
+            for err in errate_split:
+                self._view._lvOut.controls.append(ft.Text(err))
+            tempo_str = "Time elapsed: " + str(tempo)
+            self._view._lvOut.controls.append(ft.Text(tempo_str))
+            self._view.update()
+
+
     def handleSentence(self, txtIn, language, modality):
         txtIn = replaceChars(txtIn.lower())
 
-        words = txtIn.split()
+        words = txtIn.split(" ")
         paroleErrate = " - "
 
         match modality:
@@ -29,7 +51,7 @@ class SpellChecker:
                 parole = self._multiDic.searchWordLinear(words, language)
                 for parola in parole:
                     if not parola.corretta:
-                        paroleErrate = paroleErrate + str(parola) + " "
+                        paroleErrate = paroleErrate + str(parola) + " - "
                 t2 = time.time()
                 return paroleErrate, t2 - t1
 

@@ -28,7 +28,18 @@ class View(object):
 
         # Add your stuff here
 
-        self.page.add([])
+        self._language = ft.Dropdown(label="Language",
+                                     options=[ft.dropdown.Option("italian"), ft.dropdown.Option("english"), ft.dropdown.Option("spanish")],
+                                     on_change=self.append_lvOut_l)
+        self._search = ft.Dropdown(label="Search",
+                                   options=[ft.dropdown.Option("Default"), ft.dropdown.Option("Linear"), ft.dropdown.Option("Dichotomic")],
+                                   on_change=self.append_lvOut_s)
+        self._input = ft.TextField(label="Write your text here", on_submit=self.append_lvOut_t)
+        self._startButton = ft.ElevatedButton(text="Translate", on_click=self.__controller.handleSpellCheck)
+        self._lvOut = ft.ListView()
+        self.page.add(ft.Row(spacing=30, controls=[self._language]),
+                      ft.Row(spacing=30, controls=[self._search, self._input, self._startButton]),
+                      ft.Row(spacing=30, controls=[self._lvOut]))
 
         self.page.update()
 
@@ -51,3 +62,15 @@ class View(object):
         #     ft.colors.GREY_900 if self.page.theme_mode == ft.ThemeMode.DARK else ft.colors.GREY_300
         # )
         self.page.update()
+
+    def append_lvOut_l(self, e):
+        self._lvOut.controls.append(ft.Text("Language changed."))
+        self.update()
+
+    def append_lvOut_s(self, e):
+        self._lvOut.controls.append(ft.Text("Searching modality changed."))
+        self.update()
+
+    def append_lvOut_t(self, e):
+        self._lvOut.controls.append(ft.Text("Text selected."))
+        self.update()
